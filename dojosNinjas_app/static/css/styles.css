@@ -1,0 +1,36 @@
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: goldenrod;
+}
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+}
+
+.result{
+    border-style: solid;
+    border-width: 2px 0px 0px 0px;
+}
+
+.doja{
+    display:block;
+    border-style: solid;
+    border-width: 0px 0px 5px 0px;
+    margin-bottom: 10px;
+}
+
+.do{
+    background-color: gray;
+}

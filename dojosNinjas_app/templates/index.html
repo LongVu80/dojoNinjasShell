@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dojos & Ninjas Template</title>
+    {% load static %}
+    <link rel='stylesheet' href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Dojos & Ninjas Template</h1>
+    </header>
+    <div class="container">
+        <div class="box">
+        <form action="createDojo" method="post">
+            <h3>Add a Dojo</h3>
+            {%  csrf_token %}
+            <section class='row'>
+                <label for='name'>Name of Dojo: </label>
+                <input type='text' id='name' name='name'>
+            </section>
+            <section class='row'>
+                <label for='city'>City of Dojo: </label>
+                <input type='text' id='city' name='city'>
+            </section>
+            <section class='row'>
+                <label for='state'>State of Dojo: </label>
+                <input type='text' id='state' name='state'>
+            </section>
+                    <button>Add New Dojo</button>
+                </form>
+            </div>
+
+
+            <div class="box">
+                <form action="createNinja" method="post">
+                    <h3>Add a User</h3>
+                    {%  csrf_token %}
+                    <section>
+                        <label for='first_name'>First_Name: </label>
+                        <input type='text' id='first_name' name='first_name'>
+                    </section>
+                    <section>
+                        <label for='last_name'>Last_Name: </label>
+                        <input type='text' id='last_name' name='last_name'>
+                    </section>
+                        Choose your Dojo: 
+                        <select name="dojo_id">
+                            {% for dojo in dojos %}
+                                <option value="{{ dojo.id }}">{{ dojo.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </p>
+                    <button>Add New Ninja</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="result">
+            <h3>All the Dojos</h3>
+            <div class="list">
+                    {% for dojo in dojos %} 
+                            {% for ninja in dojo.ninjas.all %}
+                                    
+                            {% endfor%}
+                            <section class="doja">
+                            <p class="do">Dojo: {{ dojo.name }} ({{ dojo.city }}, {{ dojo.state }}) - {{ dojo.ninjas.count }} <a href="/dojo/{{ dojo.id }}/delete">Delete</a></p>
+                            Ninjas:
+                                {% for ninja in dojo.ninjas.all %}
+                                    <li>{{ ninja.first_name }} {{ ninja.last_name }} <a href="/ninja/{{ ninja.id }}/delete">Delete</a></li>
+                                {% endfor%}
+                            </section>
+                    {% endfor%}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
