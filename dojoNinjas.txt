@@ -1,0 +1,128 @@
+(djangoPy3Env) longvu@Longs-MacBook-Pro ~ % cd documents/codingdojo/python_stack
+(djangoPy3Env) longvu@Longs-MacBook-Pro python_stack % mkdir DojoNinjasShell
+(djangoPy3Env) longvu@Longs-MacBook-Pro python_stack % cd DojoNinjasShell
+(djangoPy3Env) longvu@Longs-MacBook-Pro DojoNinjasShell % django-admin startproject dojo_ninjas_proj
+(djangoPy3Env) longvu@Longs-MacBook-Pro DojoNinjasShell % cd dojo_ninjas_proj
+(djangoPy3Env) longvu@Longs-MacBook-Pro dojo_ninjas_proj % python3 manage.py startapp dojo_ninjas_app
+
+(djangoPy3Env) longvu@Longs-MacBook-Pro dojo_ninjas_proj % python3 manage.py makemigrations
+Migrations for 'dojo_ninjas_app':
+  dojo_ninjas_app/migrations/0001_initial.py
+    - Create model Dojos
+    - Create model Ninjas
+
+(djangoPy3Env) longvu@Longs-MacBook-Pro dojo_ninjas_proj % python3 manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, dojo_ninjas_app, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying dojo_ninjas_app.0001_initial... OK
+  Applying sessions.0001_initial... OK
+
+(djangoPy3Env) longvu@Longs-MacBook-Pro dojo_ninjas_proj % python3 manage.py shell
+Python 3.8.2 (default, Apr  8 2021, 23:19:18) 
+[Clang 12.0.5 (clang-1205.0.22.9)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+
+>>> from dojo_ninjas_app.models import *
+>>> Dojo.objects.create(name = "Black Tiger", city = "Chicago", state = "IL")
+<Dojos: Dojos object (1)>
+>>> Dojos.objects.create(Name = "Fat Panda", City = "Dallas", State = "TX")
+<Dojos: Dojos object (2)>
+>>> Dojos.objects.create(Name = "Blue Foot", City = "Tampa", State = "FL")
+<Dojos: Dojos object (3)>
+
+>>> dojo_one = Dojos.objects.get(id=1)
+>>> dojo_one.delete()
+(1, {'dojo_ninjas_app.Ninjas': 0, 'dojo_ninjas_app.Dojos': 1})
+>>> dojo_two = Dojos.objects.get(id=2)
+>>> dojo_two.delete()
+(1, {'dojo_ninjas_app.Ninjas': 0, 'dojo_ninjas_app.Dojos': 1})
+>>> dojo_three = Dojos.objects.get(id=3)
+>>> dojo_three.delete()
+(1, {'dojo_ninjas_app.Ninjas': 0, 'dojo_ninjas_app.Dojos': 1})
+>>> Dojos.objects.all()
+<QuerySet []>
+
+>>> Dojos.objects.create(Name = "Black Dragon", City = "Houston", State = "TX")
+<Dojos: Dojos object (4)>
+>>> Dojos.objects.create(Name = "Blue Bird", City = "Las Vegas", State = "NV")
+<Dojos: Dojos object (5)>
+>>> Dojos.objects.create(Name = "Thunder Fist", City = "New York", State = "NY")
+<Dojos: Dojos object (6)>
+
+>>> Dojo4 = Dojos.objects.get(id=4)
+>>> Ninjas.objects.create(First_Name = "Brian", Last_Name = "Smith", dojoNinja = Dojo4)
+<Ninjas: Ninjas object (1)>
+>>> Ninjas.objects.create(First_Name = "Anthony", Last_Name = "Noy", dojoNinja = Dojo4)
+<Ninjas: Ninjas object (2)>
+>>> Ninjas.objects.create(First_Name = "Lina", Last_Name = "Brown", dojoNinja = Dojo4)
+<Ninjas: Ninjas object (3)>
+
+>>> Dojo5 = Dojos.objects.get(id=5)
+>>> Ninjas.objects.create(First_Name = "Hillary", Last_Name = "McDonald", dojoNinja = Dojo5)
+<Ninjas: Ninjas object (4)>
+>>> Ninjas.objects.create(First_Name = "Tom", Last_Name = "Black", dojoNinja = Dojo5)
+<Ninjas: Ninjas object (5)>
+>>> Ninjas.objects.create(First_Name = "Nathan", Last_Name = "Fire", dojoNinja = Dojo5)
+<Ninjas: Ninjas object (6)>
+
+>>> Dojo6 = Dojos.objects.get(id=6)
+>>> Ninjas.objects.create(First_Name = "Thunder", Last_Name = "Wind", dojoNinja = Dojo6)
+<Ninjas: Ninjas object (7)>
+>>> Ninjas.objects.create(First_Name = "Joe", Last_Name = "White", dojoNinja = Dojo6)
+<Ninjas: Ninjas object (8)>
+>>> Ninjas.objects.create(First_Name = "Alex", Last_Name = "Guy", dojoNinja = Dojo6)
+<Ninjas: Ninjas object (9)>
+
+>>> Dojos.objects.first().dojoNinja.all()
+<QuerySet [<Ninjas: Ninjas object (1)>, <Ninjas: Ninjas object (2)>, <Ninjas: Ninjas object (3)>]>
+>>> Dojos.objects.first().dojoNinja.all().values()
+<QuerySet [{'id': 1, 'First_Name': 'Brian', 'Last_Name': 'Smith', 'dojoNinja_id': 4, 'created_at': datetime.datetime(2021, 5, 13, 2, 55, 8, 51724, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 5, 13, 2, 55, 8, 51834, tzinfo=<UTC>)}, {'id': 2, 'First_Name': 'Anthony', 'Last_Name': 'Noy', 'dojoNinja_id': 4, 'created_at': datetime.datetime(2021, 5, 13, 2, 56, 12, 375046, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 5, 13, 2, 56, 12, 375130, tzinfo=<UTC>)}, {'id': 3, 'First_Name': 'Lina', 'Last_Name': 'Brown', 'dojoNinja_id': 4, 'created_at': datetime.datetime(2021, 5, 13, 2, 57, 13, 729386, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 5, 13, 2, 57, 13, 729470, tzinfo=<UTC>)}]>
+
+>>> Dojos.objects.last().dojoNinja.all()
+<QuerySet [<Ninjas: Ninjas object (7)>, <Ninjas: Ninjas object (8)>, <Ninjas: Ninjas object (9)>]>
+>>> Dojos.objects.last().dojoNinja.all().values()
+<QuerySet [{'id': 7, 'First_Name': 'Thunder', 'Last_Name': 'Wind', 'dojoNinja_id': 6, 'created_at': datetime.datetime(2021, 5, 13, 3, 4, 21, 544783, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 5, 13, 3, 4, 21, 544870, tzinfo=<UTC>)}, {'id': 8, 'First_Name': 'Joe', 'Last_Name': 'White', 'dojoNinja_id': 6, 'created_at': datetime.datetime(2021, 5, 13, 3, 5, 8, 701192, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 5, 13, 3, 5, 8, 701312, tzinfo=<UTC>)}, {'id': 9, 'First_Name': 'Alex', 'Last_Name': 'Guy', 'dojoNinja_id': 6, 'created_at': datetime.datetime(2021, 5, 13, 3, 5, 56, 969051, tzinfo=<UTC>), 'updated_at': datetime.datetime(2021, 5, 13, 3, 5, 56, 969126, tzinfo=<UTC>)}]>
+
+>>> Ninjas.objects.last().dojoNinja
+<Dojos: Dojos object (6)>
+
+>>> 
+zsh: suspended  python3 manage.py shell
+(djangoPy3Env) longvu@Longs-MacBook-Pro dojo_ninjas_proj % python3 manage.py makemigrations
+Migrations for 'dojo_ninjas_app':
+  dojo_ninjas_app/migrations/0002_dojos_desc.py
+    - Add field desc to dojos
+(djangoPy3Env) longvu@Longs-MacBook-Pro dojo_ninjas_proj % python3 manage.py migrate  
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, dojo_ninjas_app, sessions
+Running migrations:
+  Applying dojo_ninjas_app.0002_dojos_desc... OK
+  
+(djangoPy3Env) longvu@Longs-MacBook-Pro dojo_ninjas_proj % python3 manage.py shell
+Python 3.8.2 (default, Apr  8 2021, 23:19:18) 
+[Clang 12.0.5 (clang-1205.0.22.9)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from dojo_ninjas_app.models import *
+>>> Dojos.objects.create(Name = "Muscle", City = "Seatle", State = "WA", desc = "New Dojo set up!")
+<Dojos: Dojos object (7)>
+>>> Dojos.objects.all()
+<QuerySet [<Dojos: Dojos object (4)>, <Dojos: Dojos object (5)>, <Dojos: Dojos object (6)>, <Dojos: Dojos object (7)>]>
